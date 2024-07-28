@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports.config = {
-    name: "ai2",
+    name: "ai",
     version: "1.0.0",
     credits: "chill",
     description: "Interact with Llama AI",
@@ -14,7 +14,7 @@ module.exports.run = async function ({ api, event, args }) {
     try {
         let q = args.join(" ");
         if (!q) {
-            return api.sendMessage("[ ❗ ] - Missing question for the ai2", event.threadID, event.messageID);
+            return api.sendMessage("[ ❗ ] - Missing question for the ai", event.threadID, event.messageID);
         }
 
         const initialMessage = await new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ module.exports.run = async function ({ api, event, args }) {
             const response = await axios.get(`https://joshweb.click/ai/llama-3-8b?q=${encodeURIComponent(q)}&uid=100`);
             const answer = response.data.result;
 
-            const formattedResponse = `👾 Iᒪᒪᗰᗩ\n━━━━━━━━━━━━━━━━━━\n${answer}\n━━━━━━━━━━━━━━━━━━`;
+            const formattedResponse = `${answer}`;
 
             await api.editMessage(formattedResponse, initialMessage.messageID);
         } catch (error) {
